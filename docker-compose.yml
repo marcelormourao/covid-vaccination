@@ -1,0 +1,21 @@
+version: '3.9'
+services:
+
+  db:
+    image: postgres:9.6
+    container_name: db
+    ports:
+      - 5432:5432
+    environment:
+      TZ: "America/Fortaleza"
+    environment:
+      POSTGRES_PASSWORD: vaccination
+      POSTGRES_DB: vaccination
+    volumes:
+      - ./postgres/scripts:/docker-entrypoint-initdb.d
+    networks: 
+      - demo-network
+
+networks: 
+  demo-network:
+    driver: bridge
