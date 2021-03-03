@@ -1,5 +1,5 @@
 import { expect, assert } from 'chai';
-import VaccinationAddress from '../../src/model/VaccinationAddress'
+import VaccinationAddress from '../../../src/model/VaccinationAddress'
 
 let address = new VaccinationAddress();
 

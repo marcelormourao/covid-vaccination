@@ -23,6 +23,8 @@ class VaccinationAddressService {
 
         return await cep(local.zipcode)
         .then((address: Address) => {
+            // console.log(address);
+
             const sql: string = 'INSERT INTO tb_vaccination_address (name,zipcode) VALUES ($1, $2) RETURNING *';
         
             const values = [local.name, local.zipcode];

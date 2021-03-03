@@ -1,5 +1,5 @@
 import { expect, assert } from 'chai';
-import Patient from '../../src/model/Patient'
+import Patient from '../../../src/model/Patient'
 
 let patient = new Patient();
 

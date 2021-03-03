@@ -1,6 +1,6 @@
 import { expect, assert } from 'chai';
-import Patient from '../../src/model/Patient';
-import PatientService from '../../src/service/PatientService'
+import Patient from '../../../src/model/Patient';
+import PatientService from '../../../src/service/PatientService'
 
 const runner = (sql: string, values?: any[]): Promise<any[]> => {
     return new Promise((resolve) => {

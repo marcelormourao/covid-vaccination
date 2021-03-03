@@ -20,6 +20,7 @@ class PatientService {
 
         return await cep(patient.zipCode)
         .then((address: Address) => {
+            // console.log(address);
 
             const sql: string = 'INSERT INTO tb_patient (name, birthday, zipcode) VALUES ($1, $2, $3) RETURNING *';
 

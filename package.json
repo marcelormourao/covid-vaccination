@@ -8,8 +8,8 @@
     "start:dev-debug": "nodemon --inpect ./src",
     "start": "npm run build && node build/index.js",
     "build": "rimraf ./build && tsc",
-    "test": "mocha --reporter spec --recursive",
-    "test2": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' nyc --reporter=text mocha -r ts-node/register 'tests/**/*.ts'"
+    "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' nyc --reporter=text mocha -r ts-node/register 'tests/unit/**/*.ts'",
+    "e2e": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register 'tests/integration/**/*.ts'"
   },
   "mocha": {
     "spec": "./tests"
@@ -24,6 +24,7 @@
     "@types/node": "^14.14.31",
     "@types/sinon": "^9.0.10",
     "chai": "^4.3.0",
+    "chai-http": "^4.3.0",
     "dotenv": "^8.2.0",
     "mocha": "^8.3.0",
     "nodemon": "^2.0.7",
