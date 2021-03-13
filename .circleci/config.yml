@@ -1,0 +1,42 @@
+version: 2.1
+
+general:
+  branches:
+    only:
+      - main
+
+orbs:
+  node: circleci/node@4.0.0
+
+jobs:
+  build-and-test:    
+    docker:
+      - image: node:10
+        environment:
+            PGUSER: postgres
+            PGPASSWORD: $PGPASSWORD
+            PGDATABASE: $PGDATABASE
+      - image: circleci/postgres:9.6-alpine
+        environment:
+            POSTGRES_PASSWORD: $PGPASSWORD
+            POSTGRES_DB: $PGDATABASE
+  
+    steps:
+      - checkout
+      - run: apt-get update
+      - run: apt-get install -y postgresql-client-9.6
+      - run: |
+          psql -h localhost -d $PGDATABASE -U postgres -p 5432 -a -q -f /root/project/postgres/scripts/script.sql
+      - run:
+          command: npm install
+      - run:
+          command: npm test
+          name: Unit Tests
+      - run:
+          command: npm run e2e
+          name: Integration Tests
+
+workflows:
+  main:
+    jobs:
+      - build-and-test
