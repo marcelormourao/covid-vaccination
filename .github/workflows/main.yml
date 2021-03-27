@@ -1,0 +1,59 @@
+name: Buil and Test
+
+on: 
+  push:
+    branches: [main]
+    
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      PGUSER: postgres
+      PGPASSWORD: vaccination
+      PGDATABASE: vaccination
+    services:
+      postgres:
+        image: postgres:9.6
+        env:
+          POSTGRES_DB: vaccination        
+          POSTGRES_PASSWORD: vaccination
+        ports:
+          - 5432:5432
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        
+      - name: Node Setup
+        uses: actions/setup-node@v2
+        with:
+          node-version: '10'
+          
+      - name: Install Dependencies
+        run: |
+          npm install
+      
+      - name: Unit tests
+        run: |
+          npm test
+
+      - name: apt-get update
+        run: |
+          sudo apt-get update
+
+      - name: Install postgresql-client-9.6
+        run: |
+          sudo apt-get install -y postgresql-client-9.6
+
+      - name: Update database
+        run: psql -h localhost -d vaccination -U postgres -p 5432 -a -q -f $(pwd)/postgres/scripts/script.sql
+      
+      - name: Integration tests
+        run: |
+          npm run e2e
