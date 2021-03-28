@@ -6,9 +6,9 @@ on:
         default: patch
         description: Bumps the package version based on value (e.g. patch)
         required: true
-      base-branch:
-        default: main
-        description: Pull request base branch
+      # base-branch:
+      #   default: main
+      #   description: Pull request base branch
 jobs:
   update-deps:
     name: Bump Node version
